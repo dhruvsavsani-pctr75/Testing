@@ -17,26 +17,6 @@ public class AddFunctionality : IAddFunctionality
         _configuration = configuration;
     }
 
-    public string GenerateJWTToken(string username)
-    {
-        Claim[] claims = new[]
-        {
-            new Claim(ClaimTypes.Name, username),
-        };
-
-        SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        JwtSecurityToken token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.Now.AddDays(30),  // Token expiration time (e.g., 1 hour)
-            signingCredentials: creds
-        );
-        return new JwtSecurityTokenHandler().WriteToken(token);  // Return the token as a string
-    }
-
     public string GenerateJWTTokenRole(string userRole, string userName, int userId)
     {
         Claim[] claims = new[]
@@ -46,7 +26,7 @@ public class AddFunctionality : IAddFunctionality
             new (ClaimTypes.NameIdentifier, userId.ToString()),
         };
 
-        SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? "6jdf5GJ0xI5cmzq4z8sZl18lmj6qfsk="));
         SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         JwtSecurityToken token = new JwtSecurityToken(
@@ -57,17 +37,6 @@ public class AddFunctionality : IAddFunctionality
             signingCredentials: creds
         );
         return new JwtSecurityTokenHandler().WriteToken(token);  // Return the token as a string
-    }
-
-    public (string? role, string? userName, string? userId) ValidateToken(string token)
-    {
-        JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-        JwtSecurityToken jwtToken = handler.ReadJwtToken(token);
-        string? roleClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-        string? userName = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-        string? userId = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
-        return (roleClaim, userName, userId);
     }
 
     public string MakeHash(string value)

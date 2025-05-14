@@ -50,7 +50,7 @@ public class HomeController : Controller
     }
 
     [Route("/logout")]
-    [Authorize]
+    [Authorize(Roles = "Admin,User")]
     public IActionResult Logout()
     {
         return Redirect("/");

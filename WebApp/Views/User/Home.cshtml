@@ -4,5 +4,5 @@
 }
 
 <div>
-    <h1>Hello User, @User.Identity.Name, (@User.Identities.ElementAt(0).Claims.ElementAt(0).Value)</h1>
+    <h1>Hello User, @User?.Identity?.Name, (@User?.Identities.ElementAt(0).Claims.ElementAt(0).Value)</h1>
 </div>

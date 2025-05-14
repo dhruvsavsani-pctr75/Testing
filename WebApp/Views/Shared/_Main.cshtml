@@ -22,7 +22,7 @@
 <body>
     <!-- navbar -->
     @{
-        Html.RenderPartialAsync("_Navbar");
+        await Html.RenderPartialAsync("_Navbar");
     }
 
     @RenderBody()
