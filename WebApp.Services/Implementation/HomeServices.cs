@@ -25,12 +25,12 @@ public class HomeServices : IHomeServices
 
         if (user == null)
         {
-            return "Username doesn't match";
+            return "Username doesn't match.";
         }
 
         if (!_addFunctionality.CompareHash(loginViewModel.Password, user.Password))
         {
-            return "Password doesn't match";
+            return "Password doesn't match.";
         }
 
         string JWTToken = _addFunctionality.GenerateJWTTokenRole(user.Role.Role1, loginViewModel.UserName, user.Id);
