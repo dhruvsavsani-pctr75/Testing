@@ -3,13 +3,13 @@
 <form id="loginForm">
     <div class="mb-3">
         <label for="username" class="form-label fs-5">Username</label>
-        <input type="text" class="form-control mb-1" id="username" asp-for="UserName">
+        <input type="text" class="form-control mb-1" id="username" asp-for="UserName" placeholder="Username">
         <p class="text-danger fw-bold">@Html.ValidationMessageFor(m => m.UserName)</p>
     </div>
     <div class="mb-4">
         <label for="loginPassword" class="form-label fs-5">Password</label>
         <div class="position-relative d-flex align-items-center justify-content-end mb-1">
-            <input type="password" class="form-control pe-5" id="loginPassword" asp-for="Password">
+            <input type="password" class="form-control pe-5" id="loginPassword" asp-for="Password" placeholder="Password">
             <i class="bi bi-eye-slash-fill position-absolute me-3 text-dark cursor-pointer" id="togglePassword"></i>
         </div>
         <p class="text-danger fw-bold">@Html.ValidationMessageFor(m => m.Password)</p>
